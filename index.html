@@ -5,81 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR Optical Illusions</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        
-        body {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #000;
-}
-
-.controls {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 10;
-}
-
-button {
-    margin: 5px;
-    padding: 10px;
-    background-color: #444;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #555;
-}
-        
-    </style>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/master/aframe/build/AR.js"></script>
 </head>
 <body>
     <a-scene embedded arjs>
         <a-marker preset="hiro">
-            <a-image src="illusion1.png" scale="2 2 2" rotation="0 0 0"></a-image>
+            <a-entity id="illusion" geometry="primitive: box; width: 1; height: 1; depth: 0.1"
+                      material="color: #FF5733" rotation="0 0 0"
+                      position="0 0.5 0">
+            </a-entity>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
     <div class="controls">
         <button id="rotate">Rotate</button>
-        <button id="scale">Scale</button>
-        <button id="capture">Capture</button>
+        <button id="scaleUp">Scale Up</button>
+        <button id="scaleDown">Scale Down</button>
+        <button id="screenshot">Capture & Share</button>
     </div>
-    <script>
-        
-       const image = document.querySelector('a-image');
-let rotation = 0;
-let scale = 2;
-
-document.getElementById('rotate').addEventListener('click', () => {
-    rotation += 45; // Rotate by 45 degrees
-    image.setAttribute('rotation', `0 ${rotation} 0`);
-});
-
-document.getElementById('scale').addEventListener('click', () => {
-    scale = scale === 2 ? 1 : 2; // Toggle between two scales
-    image.setAttribute('scale', `${scale} ${scale} ${scale}`);
-});
-
-document.getElementById('capture').addEventListener('click', () => {
-    captureImage();
-});
-
-function captureImage() {
-    const canvas = document.querySelector('canvas');
-    const link = document.createElement('a');
-    link.download = 'ar_capture.png';
-    link.href = canvas.toDataURL();
-    link.click();
-}
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
